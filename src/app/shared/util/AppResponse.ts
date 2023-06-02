@@ -9,6 +9,14 @@ export class AppResponse {
       data: payload
     })
   }
+
+  error<T>(response: Response, status: HttpCodes, message: string, payload?: T) {
+    return response.status(status).json({
+      success: false,
+      message,
+      data: payload
+    })
+  }
 }
 
 export const appResponse = new AppResponse()
