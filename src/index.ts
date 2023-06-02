@@ -1,4 +1,5 @@
-import express from 'express'
+import 'dotenv/config'
+import express, { NextFunction, Request, Response } from 'express'
 import swaggerJsDoc from 'swagger-jsdoc'
 import swaggerUI from 'swagger-ui-express'
 import helmet from 'helmet'
@@ -7,7 +8,7 @@ import cors from 'cors'
 import morgan from 'morgan'
 import { Joi } from 'celebrate'
 import moment from 'moment'
-import 'dotenv/config'
+
 import { BASE_URL, NODE_ENVIRONMENT, PORT } from './app/core/constants/env.constants'
 import api from './app/features'
 import { MongoDBConnection } from './app/core/config/mongodb.config'
@@ -66,6 +67,11 @@ const launch = () => {
     throw e
   })
 
+  process.on('SIGINT', () => {
+    mongoDbConnection.disconnect()
+    process.exit(0)
+  })
+
   app.listen(PORT, () => {
     console.log(`Successfully started the server at ${moment().format('MMM DD, YYYY - hh:mm A on Z')}`)
     console.info(`Environment: ${NODE_ENVIRONMENT}`)
@@ -82,3 +88,4 @@ try {
 }
 // TODO express-jwt-blacklist
 // TODO logout endpoint
+// todo timezone
