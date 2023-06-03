@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
 import swaggerJsDoc from 'swagger-jsdoc'
 import swaggerUI from 'swagger-ui-express'
 import helmet from 'helmet'
@@ -11,7 +11,8 @@ import moment from 'moment'
 
 import { BASE_URL, NODE_ENVIRONMENT, PORT } from './app/core/constants/env.constants'
 import api from './app/features'
-import { MongoDBConnection } from './app/core/config/mongodb.config'
+import { connectDB, disconnectDB } from './app/core/config/mongodb.config'
+import { errorFilter } from './app/core/middleware/error-filter.middleware'
 
 const launch = () => {
   const envSchema = Joi.object({
@@ -19,7 +20,9 @@ const launch = () => {
     BASE_URL: Joi.string().required(),
     DATABASE_CONNECTION_STRING: Joi.string().required(),
     DATABASE_NAME: Joi.string().required(),
-    JWT_SECRET: Joi.string().required()
+    JWT_SECRET: Joi.string().required(),
+    TZ_OFFSET: Joi.string().optional(),
+    TZ: Joi.string().required()
   })
 
   const validationResult = envSchema.unknown().validate(process.env)
@@ -61,14 +64,15 @@ const launch = () => {
 
   app.use('/api', api)
 
-  const mongoDbConnection = new MongoDBConnection()
-  mongoDbConnection.connect().catch(e => {
+  app.use(errorFilter)
+
+  connectDB().catch(e => {
     console.error('Failed to connect MongoDB')
     throw e
   })
 
   process.on('SIGINT', () => {
-    mongoDbConnection.disconnect()
+    disconnectDB()
     process.exit(0)
   })
 
