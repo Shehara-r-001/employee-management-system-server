@@ -13,3 +13,7 @@ export const DATABASE_CONNECTION_STRING = env.DATABASE_CONNECTION_STRING as stri
 export const DATABASE_NAME = env.DATABASE_NAME as string
 
 export const JWT_SECRET = env.JWT_SECRET as string
+
+export const TZ_OFFSET = env.TZ_OFFSET as string
+
+export const TZ = env.TZ as string

@@ -11,13 +11,17 @@ export const dtoValidationMiddleware = (type: any, skipMissingProperties = false
     const dtoObj = plainToInstance(type, req.body)
 
     validate(dtoObj, { skipMissingProperties }).then((errors: ValidationError[]) => {
-      if (errors.length > 0) {
-        const dtoErrors = errors.map((error: ValidationError) => (Object as any).values(error.constraints)).join(', ')
+      try {
+        if (errors.length > 0) {
+          const dtoErrors = errors.map((error: ValidationError) => (Object as any).values(error.constraints)).join(', ')
 
-        next(new AppError(CommonErrors.BAD_REQUEST_EXCEPTION, HttpCodes.BAD_REQUEST, dtoErrors))
-      } else {
-        req.body = dtoObj
-        next()
+          throw new AppError(CommonErrors.BAD_REQUEST_EXCEPTION, HttpCodes.BAD_REQUEST, dtoErrors)
+        } else {
+          req.body = dtoObj
+          next()
+        }
+      } catch (error) {
+        next(error)
       }
     })
   }
