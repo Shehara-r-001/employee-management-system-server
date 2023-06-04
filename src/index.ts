@@ -17,7 +17,7 @@ import { errorFilter } from './app/core/middleware/error-filter.middleware'
 const launch = () => {
   const envSchema = Joi.object({
     PORT: Joi.number().required(),
-    BASE_URL: Joi.string().required(),
+    BASE_URL: Joi.string().optional(),
     DATABASE_CONNECTION_STRING: Joi.string().required(),
     DATABASE_NAME: Joi.string().required(),
     JWT_SECRET: Joi.string().required(),
@@ -90,6 +90,3 @@ try {
   console.warn('Failed to start the server')
   console.error(error)
 }
-// TODO express-jwt-blacklist
-// TODO logout endpoint
-// todo timezone

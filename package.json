@@ -8,6 +8,7 @@
     "build": "yarn run tsc",
     "start": "node ./dist/index.js",
     "start:dev": "cross-env NODE_ENV=dev ts-node-dev --respawn --transpile-only ./src/index.ts",
+    "start:prod": "cross-env NODE_ENV=prod node --respawn --transpile-only ./src/index.ts",
     "build-and-start": "yarn run build && yarn run start",
     "lint": "eslint src/**/*.ts",
     "format": "eslint src/**/*.ts --fix"
