@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { NextFunction, Response } from 'express'
 import { ObjectId } from 'mongodb'
 
 import { CreateUserDTO } from '../../dto/create-user.dto'

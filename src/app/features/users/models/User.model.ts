@@ -12,4 +12,5 @@ export interface IUser {
   createdAt: Date | string
   updatedAt: Date | string | undefined
   active: boolean
+  phone: string | undefined
 }

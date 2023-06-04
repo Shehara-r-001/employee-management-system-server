@@ -6,7 +6,7 @@ import { signUp } from './signup'
 import { jwtGuard } from '../../../../core/middleware/jwtGuard.middleware'
 import { rolesGuard } from '../../../../core/middleware/rolesGuard'
 import { Roles } from '../../../../shared/enums/Roles.enum'
-import { createUser } from './tasks'
+import { createUser } from './create-user'
 
 const router = Router()
 
