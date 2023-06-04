@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken'
+
 import { JWT_SECRET } from '../../../core/constants/env.constants'
-import { AppResponse } from '../AppResponse'
 import { AppError } from '../AppError'
 import { CommonErrors } from '../../enums/commonErrors.enum'
 import { HttpCodes } from '../../enums/httpCodes.enum'
