@@ -8,7 +8,7 @@ import { JWT_SECRET } from '../constants/env.constants'
 import { IRequest } from '../../features/users/models/IRequest'
 import { IUser } from '../../features/users/models/User.model'
 
-export const jwtGuard = (req: IRequest, res: Response, next: NextFunction) => {
+export const jwtGuard = (req: IRequest, _res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(' ')[1]
 
@@ -18,6 +18,7 @@ export const jwtGuard = (req: IRequest, res: Response, next: NextFunction) => {
       if (error) throw new AppError(CommonErrors.UNAUTHORIZED_EXCEPTION, HttpCodes.UNAUTHORIZED, error.message)
 
       req.user = decoded as Partial<IUser>
+      next()
     })
   } catch (error) {
     next(error)

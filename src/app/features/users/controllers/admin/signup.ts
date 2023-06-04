@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { Document, InsertOneResult, WithId, WithoutId } from 'mongodb'
+import { WithId } from 'mongodb'
 
 import { db } from '../../../../core/config/mongodb.config'
 import { SignUpDTO } from '../../dto/signup.dto'
@@ -31,7 +31,8 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
       password: await encryptData(data.password),
       role: Roles.ADMIN,
       createdAt: convertTimeToIST(new Date()),
-      updatedAt: undefined
+      updatedAt: undefined,
+      active: true
     })
 
     const updatedUser = await usersCollection.findOne({
@@ -42,7 +43,7 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
       const { password, ...rest } = updatedUser as WithId<IUser>
 
       const token = jwtGenarator(rest)
-      return appResponse.success(res, HttpCodes.CREATED, 'user has been created', token)
+      appResponse.success(res, HttpCodes.CREATED, 'user has been created', token)
     }
   } catch (error) {
     next(error)
