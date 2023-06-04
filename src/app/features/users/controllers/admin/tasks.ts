@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
+import { ObjectId } from 'mongodb'
 
 import { CreateUserDTO } from '../../dto/create-user.dto'
 import { db } from '../../../../core/config/mongodb.config'
@@ -7,7 +8,6 @@ import { IRequest } from '../../models/IRequest'
 import { convertTimeToIST } from '../../../../shared/util/toIST'
 import { appResponse } from '../../../../shared/util/AppResponse'
 import { HttpCodes } from '../../../../shared/enums/httpCodes.enum'
-import { ObjectId } from 'mongodb'
 
 const usersCollection = db.collection<Partial<IUser>>('users')
 
@@ -26,5 +26,6 @@ export const createUser = async (req: IRequest, res: Response, next: NextFunctio
     appResponse.success(res, HttpCodes.CREATED, `user has been created`, createdUser)
   } catch (error) {
     next(error)
+    throw error
   }
 }

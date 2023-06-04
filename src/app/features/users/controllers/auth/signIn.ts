@@ -37,5 +37,6 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
     return appResponse.success(res, HttpCodes.OK, 'Signed in successfully', token)
   } catch (error) {
     next(error)
+    throw error
   }
 }

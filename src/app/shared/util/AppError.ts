@@ -1,3 +1,4 @@
+import { CommonErrors } from '../enums/commonErrors.enum'
 import { HttpCodes } from '../enums/httpCodes.enum'
 
 // centralized error object that derives from Node’s Error
