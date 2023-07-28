@@ -15,6 +15,52 @@ import { IUser } from '../../models/User.model'
 
 const usersCollection = db.collection<Partial<IUser>>('users')
 
+// /**
+//  * @swagger
+//  * /api/admin/signup:
+//  *   post:
+//  *     summary: User Signup
+//  *     description: Register a new user
+//  *     requestBody:
+//  *       required: true
+//  *       content:
+//  *         application/json:
+//  *           schema:
+//  *             $ref: '#/components/schemas/SignUpDTO'
+//  *     responses:
+//  *       200:
+//  *         description: Successful signup
+//  *       400:
+//  *         description: Invalid request body or missing required fields
+//  *     security: []
+//  *
+//  * components:
+//  *   schemas:
+//  *     SignUpDTO:
+//  *       type: object
+//  *       properties:
+//  *         email:
+//  *           type: string
+//  *           format: email
+//  *         password:
+//  *           type: string
+//  *           minLength: 6
+//  *         phone:
+//  *           type: string
+//  *         name:
+//  *           type: string
+//  *         role:
+//  *           $ref: '#/components/schemas/Roles'
+//  *         position:
+//  *           $ref: '#/components/schemas/Roles'
+//  *
+//  *     Roles:
+//  *       type: string
+//  *       enum:
+//  *         - admin
+//  *         - employee
+//  *         - hr
+//  */
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data: SignUpDTO = req.body
